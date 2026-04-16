@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PartidoRepository extends JpaRepository<Partido, Long> {
+    boolean existsBySigla(String sigla);
+    boolean existsByNumero(Integer numero);
 }
