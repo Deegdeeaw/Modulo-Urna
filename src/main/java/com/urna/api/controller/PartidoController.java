@@ -28,4 +28,14 @@ public class PartidoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Partido partido) {
+        try {
+            Partido partidoSalvo = service.atualizar(id, partido);
+            return ResponseEntity.ok(partidoSalvo);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
