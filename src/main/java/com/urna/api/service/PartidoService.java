@@ -27,6 +27,22 @@ public class PartidoService {
         return repository.save(partido);
     }
 
+    public Partido atualizar(Long id, Partido partidoAtualizado) {
+        Partido partidoExistente = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Partido não encontrado (" + id + ")"));
+
+        if (!partidoExistente.getSigla().equals(partidoAtualizado.getSigla()) &&
+                repository.existsBySigla(partidoAtualizado.getSigla())) {
+            throw new RuntimeException("Sigla já existente!");
+        }
+
+        partidoExistente.setNome(partidoAtualizado.getNome());
+        partidoExistente.setSigla(partidoAtualizado.getSigla());
+        partidoExistente.setNumero(partidoAtualizado.getNumero());
+
+        return repository.save(partidoExistente);
+    }
+
     public void deletar(Long id) {
         repository.deleteById(id);
     }
