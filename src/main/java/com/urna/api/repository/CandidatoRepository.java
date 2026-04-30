@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CandidatoRepository extends JpaRepository<Candidato, Long> {
+
+    boolean existsByNumeroAndEleicao_Id(Integer numero, Long eleicaoId);
+
 }
