@@ -1,12 +1,9 @@
 package com.urna.api.repository;
 
-import com.urna.api.model.Cargo;
+import com.urna.api.model.Voto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CargoRepository extends JpaRepository<Cargo, Long> {
-
-    boolean existsByNome(String nome);
-
+public interface VotoRepository extends JpaRepository<Voto, Long> {
 }
