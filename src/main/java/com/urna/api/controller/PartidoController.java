@@ -1,6 +1,7 @@
 package com.urna.api.controller;
 
 import com.urna.api.model.Partido;
+import com.urna.api.repository.PartidoRepository;
 import com.urna.api.service.PartidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,8 @@ public class PartidoController {
 
     @Autowired
     private PartidoService service;
+    @Autowired
+    private PartidoRepository partidoRepository;
 
     @GetMapping
     public List<Partido> listar() {
@@ -40,8 +43,14 @@ public class PartidoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        service.deletar(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> remover(@PathVariable Long id) {
+        try {
+            service.deletar(id);
+            return ResponseEntity.ok("Partido Removido com sucesso!");
+        }
+        catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 }
