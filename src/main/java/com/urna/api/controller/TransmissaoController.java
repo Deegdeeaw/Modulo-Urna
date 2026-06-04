@@ -1,6 +1,6 @@
 package com.urna.api.controller;
 
-import com.urna.api.model.TransmissaoController;
+import com.urna.api.dto.BoletimUrnaDTO;
 import com.urna.api.service.TransmissaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
