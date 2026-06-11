@@ -24,14 +24,16 @@ public class SecurityConfig {
 
         return http.build();
     }
-    
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(List.of(
-                "https://frontend-administrativo.vercel.app"
+                "https://frontend-administrativo.vercel.app",
+                "http://localhost:*"
+
         ));
 
         configuration.setAllowedMethods(List.of(
