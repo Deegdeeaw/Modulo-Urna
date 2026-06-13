@@ -24,6 +24,11 @@ public class Eleitor {
     @JoinColumn(name = "secao_id", nullable = false)
     private SecaoEleitoral secao;
 
+    // Relacionamento com UF
+    @ManyToOne
+    @JoinColumn(name = "uf_id", nullable = false)
+    private Uf uf;
+
     public Eleitor() {
     }
 
@@ -65,5 +70,13 @@ public class Eleitor {
 
     public void setSecao(SecaoEleitoral secao) {
         this.secao = secao;
+    }
+
+    public Uf getUf() {
+        return uf;
+    }
+
+    public void setUf(Uf uf) {
+        this.uf = uf;
     }
 }

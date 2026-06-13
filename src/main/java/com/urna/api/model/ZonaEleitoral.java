@@ -42,4 +42,17 @@ public class ZonaEleitoral {
     public void setCidade(String cidade) {
         this.cidade = cidade;
     }
+
+    // Relacionamento com UF
+    @ManyToOne
+    @JoinColumn(name = "uf_id", nullable = false)
+    private Uf uf;
+
+    public Uf getUf() {
+        return uf;
+    }
+
+    public void setUf(Uf uf) {
+        this.uf = uf;
+    }
 }
