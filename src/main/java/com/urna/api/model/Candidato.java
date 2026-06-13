@@ -31,6 +31,11 @@ public class Candidato {
     @JoinColumn(name = "cargo_id", nullable = false)
     private Cargo cargo;
 
+    // Relacionamento com UF
+    @ManyToOne
+    @JoinColumn(name = "uf_id")
+    private Uf uf;
+
     // Relacionamento com Eleicao
     @ManyToOne
     @JoinColumn(name = "eleicao_id", nullable = false)
@@ -86,4 +91,13 @@ public class Candidato {
     public void setEleicao(Eleicao eleicao) {
         this.eleicao = eleicao;
     }
+
+    public Uf getUf() {
+        return uf;
+    }
+
+    public void setUf(Uf uf) {
+        this.uf = uf;
+    }
+
 }
