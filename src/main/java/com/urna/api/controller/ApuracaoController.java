@@ -27,7 +27,7 @@ public class ApuracaoController {
 
     @GetMapping
     @RequestMapping("/buscar")
-    public ResponseEntity<?> buscar(
+    public ResponseEntity<?> buscar(    
             @RequestParam Long candidatoId,
             @RequestParam Long eleicaoId
     ) {

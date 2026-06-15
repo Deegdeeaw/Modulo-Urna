@@ -6,7 +6,10 @@ import jakarta.persistence.*;
 @Table(
         name = "candidatos",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"numero", "eleicao_id"})
+                @UniqueConstraint(
+                        name = "uk_candidato_numero_cargo_eleicao",
+                        columnNames = {"numero", "cargo_id", "eleicao_id"}
+                )
         }
 )
 public class Candidato {
