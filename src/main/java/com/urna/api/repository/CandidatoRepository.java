@@ -7,11 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CandidatoRepository extends JpaRepository<Candidato, Long> {
 
-    boolean existsByNumeroAndCargo_IdAndEleicao_IdAndUf_Id(
-            Integer numero,
-            Long cargoId,
-            Long eleicaoId,
-            Long ufId
-    );
-
 }
