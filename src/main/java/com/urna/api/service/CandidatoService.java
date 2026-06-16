@@ -1,9 +1,9 @@
 package com.urna.api.service;
 
-import org.springframework.stereotype.Service;
 import com.urna.api.model.Candidato;
 import com.urna.api.repository.CandidatoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -23,13 +23,25 @@ public class CandidatoService {
             throw new RuntimeException("Eleição é obrigatória!");
         }
 
-        boolean numeroExiste = repository.existsByNumeroAndEleicao_Id(
+        if (candidato.getCargo() == null || candidato.getCargo().getId() == null) {
+            throw new RuntimeException("Cargo é obrigatório!");
+        }
+
+        Long ufId = candidato.getUf() != null
+                ? candidato.getUf().getId()
+                : null;
+
+        boolean numeroExiste = repository.existsByNumeroAndCargo_IdAndEleicao_IdAndUf_Id(
                 candidato.getNumero(),
-                candidato.getEleicao().getId()
+                candidato.getCargo().getId(),
+                candidato.getEleicao().getId(),
+                ufId
         );
 
         if (numeroExiste) {
-            throw new RuntimeException("Número já cadastrado para esta eleição!");
+            throw new RuntimeException(
+                    "Já existe um candidato com este número para este cargo nesta eleição."
+            );
         }
 
         return repository.save(candidato);
@@ -40,18 +52,37 @@ public class CandidatoService {
         Candidato candidatoExistente = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Candidato não encontrado (" + id + ")"));
 
-        boolean mudouNumeroOuEleicao =
-                !candidatoExistente.getNumero().equals(candidatoAtualizado.getNumero()) ||
-                        !candidatoExistente.getEleicao().getId().equals(candidatoAtualizado.getEleicao().getId());
+        Long ufAtual = candidatoAtualizado.getUf() != null
+                ? candidatoAtualizado.getUf().getId()
+                : null;
 
-        if (mudouNumeroOuEleicao) {
-            boolean numeroExiste = repository.existsByNumeroAndEleicao_Id(
+        Long ufExistente = candidatoExistente.getUf() != null
+                ? candidatoExistente.getUf().getId()
+                : null;
+
+        boolean mudou =
+                !candidatoExistente.getNumero().equals(candidatoAtualizado.getNumero())
+                        || !candidatoExistente.getCargo().getId().equals(candidatoAtualizado.getCargo().getId())
+                        || !candidatoExistente.getEleicao().getId().equals(candidatoAtualizado.getEleicao().getId())
+                        || (
+                        (ufExistente == null && ufAtual != null)
+                                || (ufExistente != null && ufAtual == null)
+                                || (ufExistente != null && !ufExistente.equals(ufAtual))
+                );
+
+        if (mudou) {
+
+            boolean numeroExiste = repository.existsByNumeroAndCargo_IdAndEleicao_IdAndUf_Id(
                     candidatoAtualizado.getNumero(),
-                    candidatoAtualizado.getEleicao().getId()
+                    candidatoAtualizado.getCargo().getId(),
+                    candidatoAtualizado.getEleicao().getId(),
+                    ufAtual
             );
 
             if (numeroExiste) {
-                throw new RuntimeException("Número já cadastrado para esta eleição!");
+                throw new RuntimeException(
+                        "Já existe um candidato com este número para este cargo nesta eleição."
+                );
             }
         }
 
@@ -59,6 +90,7 @@ public class CandidatoService {
         candidatoExistente.setNumero(candidatoAtualizado.getNumero());
         candidatoExistente.setPartido(candidatoAtualizado.getPartido());
         candidatoExistente.setCargo(candidatoAtualizado.getCargo());
+        candidatoExistente.setUf(candidatoAtualizado.getUf());
         candidatoExistente.setEleicao(candidatoAtualizado.getEleicao());
 
         return repository.save(candidatoExistente);
@@ -67,4 +99,5 @@ public class CandidatoService {
     public void deletar(Long id) {
         repository.deleteById(id);
     }
+
 }
