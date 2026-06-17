@@ -67,6 +67,19 @@ public class VotoService {
             throw new RuntimeException("A zona eleitoral da urna não possui UF.");
         }
 
+
+        System.out.println("=================================");
+        System.out.println("Eleitor UF: " + eleitor.getUf().getId());
+        System.out.println("Eleitor ID: " + eleitor.getId());
+        System.out.println("Eleitor Nome: " + eleitor.getNome());
+        System.out.println("Eleitor UF (objeto): " + eleitor.getUf().getId());
+        System.out.println("Eleitor UF (banco): " + eleitor.getUf().getSigla());
+
+        System.out.println("Urna ID: " + urna.getId());
+        System.out.println("Seção: " + urna.getSecao().getId());
+        System.out.println("Zona: " + urna.getSecao().getZona().getId());
+        System.out.println("UF da urna: " + urna.getSecao().getZona().getUf().getId());
+        System.out.println("=================================");
         // O eleitor só pode votar em urna da própria UF
         if (!urna.getSecao()
                 .getZona()
