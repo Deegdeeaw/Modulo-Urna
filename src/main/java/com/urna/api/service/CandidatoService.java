@@ -18,6 +18,16 @@ public class CandidatoService {
         return repository.findAll();
     }
 
+    // Retorna apenas os candidatos da UF da urna,mais os candidatos a Presidente.
+    public List<Candidato> listarPorEleicaoEUf(Long eleicaoId, Long ufId) {
+        return repository.findByEleicaoIdAndUfIdOrEleicaoIdAndCargoNome(
+                eleicaoId,
+                ufId,
+                eleicaoId,
+                "Presidente"
+        );
+    }
+
     public Candidato salvar(Candidato candidato) {
 
         if (candidato.getEleicao() == null || candidato.getEleicao().getId() == null) {
@@ -40,7 +50,8 @@ public class CandidatoService {
     public Candidato atualizar(Long id, Candidato candidatoAtualizado) {
 
         Candidato candidatoExistente = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Candidato não encontrado (" + id + ")"));
+                .orElseThrow(() ->
+                        new RuntimeException("Candidato não encontrado (" + id + ")"));
 
         candidatoExistente.setNome(candidatoAtualizado.getNome());
         candidatoExistente.setNumero(candidatoAtualizado.getNumero());
