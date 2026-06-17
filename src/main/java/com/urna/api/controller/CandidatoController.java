@@ -39,6 +39,18 @@ public class CandidatoController {
         }
     }
 
+    @GetMapping
+    public List<Candidato> listar(
+            @RequestParam(required = false) Long eleicaoId,
+            @RequestParam(required = false) Long ufId) {
+
+        if (eleicaoId != null && ufId != null) {
+            return service.listarPorEleicaoEUf(eleicaoId, ufId);
+        }
+
+        return service.listarTodos();
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         service.deletar(id);
