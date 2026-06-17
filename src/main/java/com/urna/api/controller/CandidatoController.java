@@ -16,7 +16,14 @@ public class CandidatoController {
     private CandidatoService service;
 
     @GetMapping
-    public List<Candidato> listar() {
+    public List<Candidato> listar(
+            @RequestParam(required = false) Long eleicaoId,
+            @RequestParam(required = false) Long ufId) {
+
+        if (eleicaoId != null && ufId != null) {
+            return service.listarPorEleicaoEUf(eleicaoId, ufId);
+        }
+
         return service.listarTodos();
     }
 
@@ -37,18 +44,6 @@ public class CandidatoController {
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-    }
-
-    @GetMapping
-    public List<Candidato> listar(
-            @RequestParam(required = false) Long eleicaoId,
-            @RequestParam(required = false) Long ufId) {
-
-        if (eleicaoId != null && ufId != null) {
-            return service.listarPorEleicaoEUf(eleicaoId, ufId);
-        }
-
-        return service.listarTodos();
     }
 
     @DeleteMapping("/{id}")
