@@ -20,8 +20,11 @@ public class ControleVotoController {
 
     @PostMapping
     public ResponseEntity<?> registrar(@RequestBody ControleVoto controle) {
+
         try {
-            return ResponseEntity.status(201).body(service.registrar(controle));
+            return ResponseEntity.status(201)
+                    .body(service.registrar(controle));
+
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -30,7 +33,8 @@ public class ControleVotoController {
     @DeleteMapping("/{eleitorId}")
     public ResponseEntity<Void> remover(@PathVariable Long eleitorId) {
         service.remover(eleitorId);
+
         return ResponseEntity.noContent().build();
     }
-}
 
+}

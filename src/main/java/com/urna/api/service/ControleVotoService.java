@@ -27,4 +27,5 @@ public class ControleVotoService {
     public void remover(Long eleitorId) {
         repository.deleteById(eleitorId);
     }
+
 }
