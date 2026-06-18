@@ -37,13 +37,10 @@ public class CandidatoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> atualizar(
-            @PathVariable Long id,
-            @RequestBody Candidato candidato) {
-
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Candidato candidato) {
         try {
-            Candidato atualizado = service.atualizar(id, candidato);
-            return ResponseEntity.ok(atualizado);
+            Candidato candidatoSalvo = service.atualizar(id, candidato);
+            return ResponseEntity.ok(candidatoSalvo);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
