@@ -32,6 +32,7 @@ public class SecurityConfig {
 
         configuration.setAllowedOrigins(List.of(
                 "https://frontend-administrativo.vercel.app",
+                "https://front-urna-teste.vercel.app",
                 "http://localhost:5173",
                 "http://localhost:3000",
                 "http://localhost:*"
