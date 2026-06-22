@@ -34,7 +34,9 @@ public class SecurityConfig {
                 "https://frontend-administrativo.vercel.app",
                 "https://front-urna.up.railway.app",
                 "http://localhost:5173",
-                "http://localhost:3000"
+                "http://localhost:3000",
+                "http://localhost:*"
+
         ));
 
         configuration.setAllowedMethods(List.of(
@@ -51,3 +53,4 @@ public class SecurityConfig {
 
         return source;
     }
+}
